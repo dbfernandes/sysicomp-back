@@ -10,26 +10,26 @@ import {
 
 import UserType from './UserType';
 
-@Entity('users')
+@Entity('Usuario')
 class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  nome: string;
 
   @Column()
-  password: string;
+  senha: string;
 
   @Column()
-  passwordResetToken: string;
+  senhaResetToken: string;
 
   @Column()
-  type_id: number;
+  usuarioTipoId: number;
 
-  @ManyToOne(() => UserType, userType => userType.user)
-  @JoinColumn({ name: 'type_id' })
-  type: UserType;
+  @ManyToOne(() => UserType, userType => userType.usuario)
+  @JoinColumn({ name: 'usuarioTipoId' })
+  usuarioTipo: UserType;
 
   @Column()
   email: string;
@@ -38,55 +38,52 @@ class User {
   siape: string;
 
   @Column()
-  ingressDate: string;
+  dataIngresso: Date;
 
   @Column()
-  address: string;
+  endereco: string;
 
   @Column()
-  cellPhone: string;
+  telCelular: string;
 
   @Column()
-  homePhone: string;
+  telResidencial: string;
 
   @Column()
-  titraction: string;
+  titulacao: string;
 
   @Column()
-  class: string;
+  classe: string;
 
   @Column()
-  level: string;
+  nivel: string;
 
   @Column()
   regime: string;
 
   @Column()
-  inning: string;
+  turno: string;
 
   @Column()
   idLattes: number;
 
   @Column()
-  formation: string;
+  formacao: string;
 
   @Column()
-  abstract: string;
+  resumo: string;
 
   @Column()
-  idRh: number;
-
-  @Column()
-  office: string;
+  cargo: string;
 
   @Column()
   status: number;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }
 
 export default User;

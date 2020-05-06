@@ -6,24 +6,23 @@ import AppError from '../errors/AppError';
 import User from '../models/User';
 
 interface Request {
-  name: string;
-  password: string;
-  type_id: number;
+  nome: string;
+  senha: string;
+  usuarioTipoId: number;
   email: string;
   siape: string;
-  ingressDate: string;
-  address: string;
-  cellPhone: string;
-  homePhone: string;
-  titraction: string;
-  class: string;
-  level: string;
+  dataIngresso: string;
+  endereco: string;
+  telCelular: string;
+  telResidencial: string;
+  titulacao: string;
+  classe: string;
+  nivel: string;
   regime: string;
   idLattes: number;
-  formation: string;
-  abstract: string;
-  idRh: number;
-  office: string;
+  formacao: string;
+  resumo: string;
+  cargo: string;
   status: number;
 }
 
@@ -39,15 +38,17 @@ class CreateUserService {
       throw new AppError('Email já existente');
     }
 
-    const hashedPassword = await hash(UserData.password, 8);
+    const hashedPassword = await hash(UserData.senha, 8);
 
     const userData = UserData;
 
-    userData.password = hashedPassword;
+    userData.senha = hashedPassword;
 
     const user = usersRepository.create(userData);
 
     await usersRepository.save(user);
+
+    delete user.senha;
 
     return user;
   }

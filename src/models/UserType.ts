@@ -1,30 +1,17 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import User from './User';
 
-@Entity('userType')
+@Entity('UsuarioTipo')
 class UserType {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  nome: string;
 
-  @OneToMany(() => User, user => user.type)
-  user: User;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
+  @OneToMany(() => User, user => user.usuarioTipo)
+  usuario: User;
 }
 
 export default UserType;

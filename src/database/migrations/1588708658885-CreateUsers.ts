@@ -9,7 +9,7 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'Usuario',
         columns: [
           {
             name: 'id',
@@ -19,57 +19,58 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'name',
+            name: 'nome',
             type: 'varchar',
           },
           {
-            name: 'password',
+            name: 'senha',
             type: 'varchar',
           },
           {
-            name: 'passwordResetToken',
+            name: 'senhaResetToken',
             type: 'varchar',
             isNullable: true,
-          },
-          {
-            name: 'type_id',
-            type: 'int',
-            isNullable: true,
+            default: null,
           },
           {
             name: 'email',
             type: 'varchar',
           },
           {
+            name: 'usuarioTipoId',
+            type: 'int',
+            isNullable: true,
+          },
+          {
             name: 'siape',
             type: 'varchar',
           },
           {
-            name: 'ingressDate',
+            name: 'dataIngresso',
+            type: 'date',
+          },
+          {
+            name: 'endereco',
             type: 'varchar',
           },
           {
-            name: 'address',
+            name: 'telCelular',
             type: 'varchar',
           },
           {
-            name: 'cellPhone',
+            name: 'telResidencial',
             type: 'varchar',
           },
           {
-            name: 'homePhone',
+            name: 'titulacao',
             type: 'varchar',
           },
           {
-            name: 'titraction',
+            name: 'classe',
             type: 'varchar',
           },
           {
-            name: 'class',
-            type: 'varchar',
-          },
-          {
-            name: 'level',
+            name: 'nivel',
             type: 'varchar',
           },
           {
@@ -77,7 +78,7 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'inning',
+            name: 'turno',
             type: 'varchar',
           },
           {
@@ -85,19 +86,15 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'formation',
+            name: 'formacao',
             type: 'varchar',
           },
           {
-            name: 'abstract',
+            name: 'resumo',
             type: 'varchar',
           },
           {
-            name: 'idRh',
-            type: 'int',
-          },
-          {
-            name: 'office',
+            name: 'cargo',
             type: 'varchar',
           },
           {
@@ -105,12 +102,12 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'created_at',
+            name: 'createdAt',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updated_at',
+            name: 'updatedAt',
             type: 'timestamp',
             default: 'now()',
           },
@@ -119,12 +116,12 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'users',
+      'Usuario',
       new TableForeignKey({
-        name: 'userTypeForeingKey',
-        columnNames: ['type_id'],
+        name: 'usuarioTipoForeingKey',
+        columnNames: ['usuarioTipoId'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'userType',
+        referencedTableName: 'UsuarioTipo',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       }),
@@ -132,7 +129,7 @@ export default class CreateUsers1588708658885 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('users', 'userTypeForeingKey');
-    await queryRunner.dropTable('users');
+    await queryRunner.dropForeignKey('Usuario', 'usuarioTipoForeingKey');
+    await queryRunner.dropTable('Usuario');
   }
 }

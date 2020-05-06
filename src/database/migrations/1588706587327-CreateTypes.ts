@@ -4,7 +4,7 @@ export default class CreateTypes1588706587327 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'userType',
+        name: 'UsuarioTipo',
         columns: [
           {
             name: 'id',
@@ -14,18 +14,8 @@ export default class CreateTypes1588706587327 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'name',
+            name: 'nome',
             type: 'varchar',
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
           },
         ],
       }),
@@ -33,6 +23,6 @@ export default class CreateTypes1588706587327 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('userType');
+    await queryRunner.dropTable('UsuarioTipo');
   }
 }
