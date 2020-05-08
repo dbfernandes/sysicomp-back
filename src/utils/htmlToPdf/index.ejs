@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  body {
+    padding: 0 50px;
+    height: 100%;
+  }
+
+  header {
+    width: 100%;
+    height: 80px;
+    padding-top: 10px;
+    margin-top: 25px;
+    border-bottom: 1px solid #9a9a9a;
+    margin-bottom: 10px;
+  }
+
+  header .imgLeft {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    left: 55px;
+    top: 35px;
+  }
+
+  header .imgLeft img {
+    height: 70px;
+    width: 70px;
+  }
+
+  header .title {
+    width: 58%;
+    height: 70px;
+    position: absolute;
+    left: 21%;
+    text-align: center;
+  }
+
+  header .title p {
+    line-height: 2px;
+    font-size: 11px;
+  }
+
+  header .imgRight {
+    width: 60px;
+    height: 77px;
+    ;
+    position: absolute;
+    right: 55px;
+    top: 30px;
+  }
+
+  header .imgRight img {
+    height: 77px;
+    width: 60px;
+  }
+
+  .subHeader {
+    width: 100%;
+    margin: 5px 0;
+    height: 50px;
+    border-bottom: 2px solid black;
+  }
+
+  .subHeader .title {
+    width: 60%;
+    height: 100%;
+    float: left;
+  }
+
+  .subHeader .title p {
+    font-size: 10px;
+    margin-top: 20px;
+  }
+
+  .subHeader .info {
+    width: 25%;
+    height: 100%;
+    float: left;
+    text-align: right;
+  }
+
+  .subHeader .info p {
+    font-size: 10px;
+    margin-top: 20px;
+    line-height: 15px;
+    margin: 0;
+  }
+
+  .subHeader .info p:first-child {
+    margin-top: 20px;
+  }
+
+  .mainContent {
+    text-align: justify;
+  }
+
+  .mainContent p {
+    font-size: 11px;
+    margin-bottom: 30px;
+  }
+
+  .infoContent {
+    width: 100%;
+    height: 100px;
+  }
+
+  .infoContent p {
+    font-size: 11px;
+    margin: 0;
+  }
+
+  .infoContent .container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+
+  .infoContent .container .left {
+    width: 55%;
+    height: 90%;
+    float: left;
+  }
+
+  .infoContent .container .left p {
+    font-size: 11px;
+    line-height: 15px;
+  }
+
+  .infoContent .container .left p:first-child {
+    line-height: 20px;
+  }
+
+  .infoContent .container .right p {
+    font-size: 11px;
+    line-height: 15px;
+  }
+
+  .infoContent .container .right p:first-child {
+    line-height: 20px;
+  }
+
+  .infoContent .container .right {
+    width: 44%;
+    height: 90%;
+    float: right;
+  }
+
+  .signature {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .signature p {
+    font-size: 10px;
+    line-height: 5px;
+  }
+
+  .signature p:first-child {
+    font-size: 15px;
+    line-height: 5px;
+  }
+
+  footer {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 260px;
+  }
+
+  footer p {
+    font-size: 7px;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <header class="header">
+    <div class="imgLeft">
+      <img src=<%= imgRepublica %>>
+    </div>
+    <div class="title">
+      <p><b><i>PODER EXECUTIVO</i></b></p>
+      <p><b><i>UNIVERSIDADE FEDERAL DO AMAZONAS</i></b></p>
+      <p><b><i>INSTITUTO DE COMPUTAÇÃO</i></b></p>
+      <p><b><i>PROGRAMA DE PÓS-GRADUAÇÃO EM INFORMÁTICA</i></b></p>
+    </div>
+    <div class="imgRight">
+      <img src=<%= imgUfam %>>
+    </div>
+  </header>
+
+  <div class="subHeader">
+    <div class="title">
+      <p><b>SOLICITAÇÃO DE AFASTAMENTO TEMPORÁRIO</b></p>
+    </div>
+
+    <div class="info">
+      <p><b>Hora: <%= hora %></b>
+      </p>
+      <p><b>Data: <%= data %></b>
+      </p>
+    </div>
+  </div>
+
+  <div class="mainContent">
+    <p>
+      O(A) <%= titulacao %>(a) <b><%= nome %></b> estará afastado de suas atividades
+      presenciais na
+      UFAM no período de <b><%= dataSaida %> </b> a <b><%= dataRetorno %></b>.
+    </p>
+    <p>
+      O motivo deste afastamento: <b><%= justificativa %></b>.
+    </p>
+
+    <p>
+      Para reposição de suas aulas, o(a) <%= titulacao %>(a) fez o seguinte planejamento:
+      <%= planoReposicao %>
+    </p>
+  </div>
+
+  <div class="infoContent">
+    <p>Os dados desse funcionário estão descritos a seguir:</p>
+    <div class="container">
+      <div class="left">
+        <p><b>Funcionário:</b> <%= nome %></p>
+        <p><b>Local:</b> <%= destino %></p>
+        <p><b>Data de Saída:</b> <%= dataSaida %></p>
+      </div>
+
+      <div class="right">
+        <p><b>E-mail:</b> <%= email %></p>
+        <p><b>Tipo de Viagem:</b> <%= tipo %></p>
+        <p><b>Data de Retorno:</b> <%= dataRetorno %></p>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="signature">
+    <p>_____________________________</p>
+    <p><b>Profa. Dra. Tanara Lauschener</b></p>
+    <p>Diretora do Instituto de Computação - IComp</p>
+  </div>
+
+  <footer>
+    <p>
+      <b>
+        <i>
+          Av. Rodrigo Otávio, 6.200 - Campus Universitário Senador Arthur
+          Virgílio Filho - CEP
+          69077-000 - Manaus, AM, Brasil
+        </i>
+      </b>
+    </p>
+    <p>
+      <b>
+        <i>
+          Tel. (092) 3305-1193/2808/2809 &nbsp;&nbsp; E-mail: secretaria@icomp.ufam.edu.br &nbsp;&nbsp;
+          http://www.icomp.ufam.edu.br
+        </i>
+      </b>
+    </p>
+  </footer>
+</body>
+
+</html>

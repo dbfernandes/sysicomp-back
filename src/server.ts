@@ -8,6 +8,7 @@ import './database';
 const app = express();
 
 app.use(express.json());
+app.use(express.static('public'));
 app.use(routes);
 
 app.listen(3333, () => {
