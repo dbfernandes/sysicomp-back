@@ -7,6 +7,7 @@ import User from '../models/User';
 
 interface Request {
   nome: string;
+  cpf: string;
   senha: string;
   usuarioTipoId: number;
   email: string;

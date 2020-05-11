@@ -1,9 +1,12 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import CreateRoomService from '../services/CreateRoomService';
 import CreateRoomReserveService from '../services/CreateRoomReserveService';
 
 const roomRouter = Router();
+
+roomRouter.use(ensureAuthenticated);
 
 roomRouter.post('/', async (request, response) => {
   try {

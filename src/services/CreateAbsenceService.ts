@@ -79,7 +79,7 @@ class CreateAbsenceService {
         } else {
           pdf
             .create(html, {})
-            .toFile(`./src/tmp/afastamento-${absence.id}.pdf`, (error, res) => {
+            .toFile(`./src/tmp/afastamento-${absence.id}.pdf`, (error, _) => {
               if (error) {
                 throw new AppError('Erro ao gerar pdf', 500);
               }
