@@ -2,10 +2,14 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+
 import CreatePostStudentService from '../services/CreatePostStudentService';
 import UpdatePostStudentService from '../services/UpdatePostStudentService';
+import DeletePostStudentService from '../services/DeletePostStudentService';
+
 import PostStudentsRepository from '../repositories/postStudentsRepository';
-import generateExcelFile from '../utils/generateExcelFile';
+
+import GenerateExcelFile from '../utils/generateExcelFile';
 
 const postStudentRouter = Router();
 
@@ -55,7 +59,7 @@ postStudentRouter.get('/excel', async (request, response) => {
   );
   response.setHeader('Content-type', 'application/vnd.openxmlformats');
 
-  await generateExcelFile(totalPostStudents, response);
+  await GenerateExcelFile(totalPostStudents, response);
 
   return response.send();
 });
@@ -67,12 +71,27 @@ postStudentRouter.put('/', async (request, response) => {
   const updatePostStudentService = new UpdatePostStudentService();
 
   try {
-    const updatedPostStudent = updatePostStudentService.execute(
+    const updatedPostStudent = await updatePostStudentService.execute(
       typeof id === 'string' ? parseInt(id, 10) : 0,
       bodyContent,
     );
 
     return response.json(updatedPostStudent);
+  } catch (err) {
+    return response.status(400).json(err);
+  }
+});
+
+postStudentRouter.delete('/', async (request, response) => {
+  const { id } = request.headers;
+
+  const deletePostStudentService = new DeletePostStudentService();
+
+  try {
+    const deletedPostStudent = await deletePostStudentService.execute(
+      typeof id === 'string' ? parseInt(id, 10) : 0,
+    );
+    return response.json(deletedPostStudent);
   } catch (err) {
     return response.status(400).json(err);
   }

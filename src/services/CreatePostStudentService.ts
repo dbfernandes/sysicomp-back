@@ -32,7 +32,7 @@ class CreatePostStudentService {
 
     const checkUserRgExists = await postStudentsRepository.findOne({
       where: {
-        cpf: bodyContent.cpf,
+        rg: bodyContent.rg,
       },
     });
 

@@ -11,44 +11,62 @@ class UpdatePostStudentService {
   ): Promise<UpdateResult> {
     const postStudentsRepository = getRepository(PostStudent);
 
-    const checkUserEmailExists = await postStudentsRepository.find({
-      where: {
-        email: bodyContent.email,
-      },
+    const currentPostStudent = await postStudentsRepository.findOne(id, {
+      loadEagerRelations: false,
     });
 
-    if (checkUserEmailExists.length > 1) {
-      throw new AppError('E-mail já cadastrado!');
+    if (!currentPostStudent) {
+      throw new AppError(
+        'Não foi possível alterar dados desse usuário\nMotivo: Usuário não consta nos registros',
+      );
     }
 
-    const checkUserCpfExists = await postStudentsRepository.find({
-      where: {
-        cpf: bodyContent.cpf,
-      },
-    });
+    if (currentPostStudent?.email !== bodyContent.email) {
+      const checkUserEmailExists = await postStudentsRepository.findOne({
+        where: {
+          email: bodyContent.email,
+        },
+      });
 
-    if (checkUserCpfExists.length > 1) {
-      throw new AppError('CPF já cadastrado!');
+      if (checkUserEmailExists) {
+        throw new AppError('E-mail já cadastrado!');
+      }
     }
 
-    const checkUserRgExists = await postStudentsRepository.find({
-      where: {
-        cpf: bodyContent.cpf,
-      },
-    });
+    if (currentPostStudent?.cpf !== bodyContent.cpf) {
+      const checkUserCpfExists = await postStudentsRepository.findOne({
+        where: {
+          cpf: bodyContent.cpf,
+        },
+      });
 
-    if (checkUserRgExists.length > 1) {
-      throw new AppError('RG já cadastrado!');
+      if (checkUserCpfExists) {
+        throw new AppError('CPF já cadastrado!');
+      }
     }
 
-    const checkUserRegistrationExists = await postStudentsRepository.find({
-      where: {
-        matricula: bodyContent.matricula,
-      },
-    });
+    if (currentPostStudent?.rg !== bodyContent.rg) {
+      const checkUserRgExists = await postStudentsRepository.findOne({
+        where: {
+          cpf: bodyContent.cpf,
+        },
+      });
 
-    if (checkUserRegistrationExists.length > 1) {
-      throw new AppError('Matricula já cadastrada!');
+      if (checkUserRgExists) {
+        throw new AppError('RG já cadastrado!');
+      }
+    }
+
+    if (currentPostStudent?.matricula !== bodyContent.matricula) {
+      const checkUserRegistrationExists = await postStudentsRepository.findOne({
+        where: {
+          matricula: bodyContent.matricula,
+        },
+      });
+
+      if (checkUserRegistrationExists) {
+        throw new AppError('Matricula já cadastrada!');
+      }
     }
 
     const updatedPostUser = await postStudentsRepository.update(
