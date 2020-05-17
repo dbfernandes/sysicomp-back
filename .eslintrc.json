@@ -25,6 +25,7 @@
   "rules": {
     "prettier/prettier": "error",
     "class-methods-use-this": "off",
+    "no-param-reassign": "off",
     "no-plusplus": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript=eslint/no-used-vars": "off",

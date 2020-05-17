@@ -30,10 +30,29 @@ postStudentRouter.post('/', async (request, response) => {
 
 postStudentRouter.get('/', async (request, response) => {
   const postStudentsRepository = getCustomRepository(PostStudentsRepository);
-  const { page = 1, loadEager = 0 } = request.query;
+  const {
+    page = 1,
+    loadEager = 0,
+    matricula,
+    nome,
+    curso,
+    status,
+    ingresso,
+    orientador,
+    linha_pesquisa,
+  } = request.query;
 
   const totalPostStudents = await postStudentsRepository.getSortedPostStudents(
     Number(loadEager),
+    {
+      matricula,
+      nome,
+      curso,
+      status,
+      ingresso,
+      orientador,
+      linha_pesquisa,
+    },
   );
 
   const pagePostStudents = totalPostStudents.slice(
@@ -51,6 +70,7 @@ postStudentRouter.get('/excel', async (request, response) => {
 
   const totalPostStudents = await postStudentsRepository.getSortedPostStudents(
     1,
+    null,
   );
 
   response.setHeader(
