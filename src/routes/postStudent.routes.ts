@@ -48,7 +48,10 @@ postStudentRouter.get('/excel', async (request, response) => {
     1,
   );
 
-  response.setHeader('Content-disposition', 'attachment; filename=teste.xlsx');
+  response.setHeader(
+    'Content-disposition',
+    'attachment; filename=Planilha-Alunos Pós-graduação.xlsx',
+  );
   response.setHeader('Content-type', 'application/vnd.openxmlformats');
 
   await generateExcelFile(totalPostStudents, response);

@@ -12,24 +12,27 @@ export default async function generateExcelFile(
   workbook.creator = 'SysIcomp Auto Generated File';
   workbook.created = new Date(2020, 10, 10);
 
-  console.log('Entrei');
-
   const worksheet = workbook.addWorksheet('My Sheet');
 
   worksheet.columns = [
     {
       header: 'Matrícula',
       key: 'matricula',
-      width: 10,
+      width: 20,
     },
     {
       header: 'Nome do Aluno',
       key: 'nome',
-      width: 35,
+      width: 40,
     },
     {
       header: 'Curso',
       key: 'curso',
+      width: 15,
+    },
+    {
+      header: 'Status do Aluno',
+      key: 'status',
       width: 20,
     },
     {
@@ -40,30 +43,46 @@ export default async function generateExcelFile(
     {
       header: 'Orientador',
       key: 'orientador',
-      width: 20,
+      width: 40,
     },
     {
       header: 'Linha de pesquisa',
       key: 'pesquisa',
-      width: 20,
+      width: 50,
     },
     {
       header: 'Título da Pesquisa',
       key: 'titulo',
-      width: 20,
+      width: 55,
     },
     {
       header: 'Data da Defesa',
       key: 'defesa',
-      width: 20,
+      width: 15,
     },
   ];
+
+  for (let i = 65; i <= 73; i++) {
+    const cell = worksheet.getCell(`${String.fromCharCode(i)}1`);
+
+    cell.style = {
+      alignment: {
+        horizontal: 'center',
+      },
+      font: {
+        bold: true,
+        name: 'Calibri',
+        family: 2,
+      },
+    };
+  }
 
   postStudents.forEach(student => {
     worksheet.addRow({
       matricula: student.matricula,
       nome: student.nome,
       curso: student.curso,
+      status: student.statusCorrente,
       ingresso: student.dataIngresso,
       orientador: student.orientador.nome,
       pesquisa: student.area.nome,
