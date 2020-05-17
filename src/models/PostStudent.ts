@@ -19,14 +19,14 @@ class PostStudent {
   @Column()
   orientadorUserId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'orientadorUserId' })
   orientador: User;
 
   @Column()
   areaId: number;
 
-  @ManyToOne(() => SearchArea)
+  @ManyToOne(() => SearchArea, { eager: true })
   @JoinColumn({ name: 'areaId' })
   area: SearchArea;
 
@@ -52,10 +52,10 @@ class PostStudent {
   curso: 'Mestrado' | 'Doutorado';
 
   @Column()
-  regime: 'Intergral' | 'Parcial';
+  regime: 'Integral' | 'Parcial';
 
   @Column()
-  bolsista: boolean;
+  bolsista: 0 | 1;
 
   @Column()
   agenciaFomento: string;
@@ -103,7 +103,7 @@ class PostStudent {
   rg: string;
 
   @Column()
-  orgaoExpeditor: string;
+  orgaoExpedidor: string;
 
   @Column()
   dataExpedicao: Date;
