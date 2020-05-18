@@ -23,23 +23,19 @@ roomRouter.post('/', async (request, response) => {
 });
 
 roomRouter.post('/:salaId', async (request, response) => {
-  try {
-    const usuarioId = request.headers.usuarioid;
-    const { salaId } = request.params;
-    const bodyContent = request.body;
+  const usuarioId = request.headers.usuarioid;
+  const { salaId } = request.params;
+  const bodyContent = request.body;
 
-    const createRoomReserve = new CreateRoomReserveService();
+  const createRoomReserve = new CreateRoomReserveService();
 
-    const roomReserve = await createRoomReserve.execute(
-      bodyContent,
-      typeof usuarioId === 'string' ? usuarioId : 'Erro',
-      typeof salaId === 'string' ? salaId : 'Erro',
-    );
+  const roomReserve = await createRoomReserve.execute(
+    bodyContent,
+    typeof usuarioId === 'string' ? usuarioId : 'Erro',
+    typeof salaId === 'string' ? salaId : 'Erro',
+  );
 
-    return response.json(roomReserve);
-  } catch (err) {
-    return response.json({ erro: err });
-  }
+  return response.json(roomReserve);
 });
 
 export default roomRouter;

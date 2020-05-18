@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import express, { Response, Request, NextFunction } from 'express';
+import 'express-async-errors';
 
 import AppError from './errors/AppError';
 import routes from './routes';
@@ -19,10 +20,13 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
       message: err.message,
     });
   }
-  return response.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
-  });
+
+  // return response.status(500).json({
+  //   status: 'error',
+  //   message: 'Internal server error',
+  // });
+
+  return response.json(err);
 });
 
 app.listen(3333, () => {

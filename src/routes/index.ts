@@ -6,6 +6,7 @@ import absenceRouter from './absences.routes';
 import roomRouter from './room.routes';
 import sessionsRouter from './sessions.routes';
 import postStudentRouter from './postStudent.routes';
+import lockingRouter from './locking.routes';
 
 const routes = Router();
 
@@ -15,5 +16,6 @@ routes.use('/absences', absenceRouter);
 routes.use('/room', roomRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/postStudent', postStudentRouter);
+routes.use('/locking', lockingRouter);
 
 export default routes;

@@ -90,16 +90,12 @@ postStudentRouter.put('/', async (request, response) => {
 
   const updatePostStudentService = new UpdatePostStudentService();
 
-  try {
-    const updatedPostStudent = await updatePostStudentService.execute(
-      typeof id === 'string' ? parseInt(id, 10) : 0,
-      bodyContent,
-    );
+  const updatedPostStudent = await updatePostStudentService.execute(
+    typeof id === 'string' ? parseInt(id, 10) : 0,
+    bodyContent,
+  );
 
-    return response.json(updatedPostStudent);
-  } catch (err) {
-    return response.status(400).json(err);
-  }
+  return response.json(updatedPostStudent);
 });
 
 postStudentRouter.delete('/', async (request, response) => {

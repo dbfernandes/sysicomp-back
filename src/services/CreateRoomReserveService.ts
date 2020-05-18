@@ -4,6 +4,10 @@ import RoomReserve from '../models/RoomReserve';
 
 import AppError from '../errors/AppError';
 
+//
+// MÓDULO PARADO POR TEMPO INDETERMINADO(AGUARDANDO CONFIRMAÇÃO DO TIPO DE ENVIO DE DADOS DE DATAS PELO FRONT-END)
+//
+
 interface Request {
   atividade: string;
   tipo: string;

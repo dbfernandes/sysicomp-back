@@ -79,11 +79,14 @@ class CreateAbsenceService {
         } else {
           pdf
             .create(html, {})
-            .toFile(`./src/tmp/afastamento-${absence.id}.pdf`, (error, _) => {
-              if (error) {
-                throw new AppError('Erro ao gerar pdf', 500);
-              }
-            });
+            .toFile(
+              `./src/tmp/afastamentos/afastamento-${absence.id}.pdf`,
+              (error, _) => {
+                if (error) {
+                  throw new AppError('Erro ao gerar pdf', 500);
+                }
+              },
+            );
         }
       },
     );
@@ -97,7 +100,7 @@ class CreateAbsenceService {
       attachments: [
         {
           filename: 'afastamento.pdf',
-          path: `/home/ricardo/Documentos/UFAM/sysicomp-back/src/tmp/afastamento-${absence.id}.pdf`,
+          path: `/home/ricardo/Documentos/UFAM/sysicomp-back/src/tmp/afastamentos/afastamento-${absence.id}.pdf`,
         },
       ],
     };
