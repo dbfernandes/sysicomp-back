@@ -3,6 +3,8 @@ import pdf from 'html-pdf';
 import ejs from 'ejs';
 import nodemailer from 'nodemailer';
 
+import sendEmailConfig from '../config/sendEmail';
+
 import Absence from '../models/Absence';
 import AppError from '../errors/AppError';
 import UsersRepository from '../repositories/usersRepository';
@@ -16,13 +18,7 @@ interface Request {
   planoReposicao: string;
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'jrsscoutinho1@gmail.com',
-    pass: 'riuhawpoxxmqexll',
-  },
-});
+const transporter = nodemailer.createTransport(sendEmailConfig);
 
 class CreateAbsenceService {
   public async execute(
@@ -36,7 +32,7 @@ class CreateAbsenceService {
       usuarioId: parseInt(usuarioId, 10),
     });
 
-    const User = await usersRepository.findOne(parseInt(usuarioId, 10));
+    const User = await usersRepository.findOne(absenceContent.usuarioId);
 
     const diretores = await usersRepository.findUsersByType(2);
     const coordenadores = await usersRepository.findUsersByType(3);
@@ -80,7 +76,7 @@ class CreateAbsenceService {
           pdf
             .create(html, {})
             .toFile(
-              `./src/tmp/afastamentos/afastamento-${absence.id}.pdf`,
+              `./tmp/afastamentos/afastamento-${absence.id}.pdf`,
               (error, _) => {
                 if (error) {
                   throw new AppError('Erro ao gerar pdf', 500);
@@ -92,7 +88,7 @@ class CreateAbsenceService {
     );
 
     const mailOptions = {
-      from: 'jrsscoutinho1@gmail.com',
+      from: 'no-reply@icomp.ufam.edu.br',
       to: destinators,
       subject: ` O(A) ${User?.cargo}(a) ${User?.nome} enviou uma solicitação de afastamento temporário do IComp. `,
       text: `\n Nome: ${User?.nome} \n E-mail: ${User?.email} \n Local: ${absence.destino} \n Tipo de Viagem: ${absence.tipo} \n Data de Saída: ${absence.dataSaida} \n Data de Retorno: ${absence.dataRetorno} \n Justificativa: ${absence.justificativa} \n Data e Hora do envio: ${absence.createdAt}\n\n Para baixar o documento, logue primeiramente no sistema e então clique no link a seguir: http://sys.icomp.ufam.edu.br/index.php?r=afastamentos%2Fprint&id=865
@@ -100,7 +96,7 @@ class CreateAbsenceService {
       attachments: [
         {
           filename: 'afastamento.pdf',
-          path: `/home/ricardo/Documentos/UFAM/sysicomp-back/src/tmp/afastamentos/afastamento-${absence.id}.pdf`,
+          path: `${projectRoot}/tmp/afastamentos/afastamento-${absence.id}.pdf`,
         },
       ],
     };

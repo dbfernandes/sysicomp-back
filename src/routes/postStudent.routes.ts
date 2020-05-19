@@ -84,8 +84,8 @@ postStudentRouter.get('/excel', async (request, response) => {
   return response.send();
 });
 
-postStudentRouter.put('/', async (request, response) => {
-  const { id } = request.headers;
+postStudentRouter.put('/:id', async (request, response) => {
+  const { id } = request.params;
   const bodyContent = request.body;
 
   const updatePostStudentService = new UpdatePostStudentService();

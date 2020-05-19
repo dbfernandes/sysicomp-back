@@ -3,13 +3,20 @@ import multer from 'multer';
 
 import AppError from '../errors/AppError';
 
-const tmpFolder = path.resolve(__dirname, '..', 'tmp', 'trancamentos');
+const tmpFolderLocking = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'trancamentos',
+);
+const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 export default {
   directory: tmpFolder,
 
   storage: multer.diskStorage({
-    destination: tmpFolder,
+    destination: tmpFolderLocking,
     filename(request, file, callback) {
       const filePrefix = request.headers.type;
       const fileId = request.headers.id;

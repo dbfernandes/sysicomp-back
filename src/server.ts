@@ -7,10 +7,13 @@ import AppError from './errors/AppError';
 import routes from './routes';
 import './database';
 
+import UploadConfig from './config/upload';
+
 const app = express();
 
 app.use(express.json());
 app.use(express.static('public'));
+app.use('/files', express.static(UploadConfig.directory));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
@@ -21,12 +24,12 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     });
   }
 
-  // return response.status(500).json({
-  //   status: 'error',
-  //   message: 'Internal server error',
-  // });
+  return response.status(500).json({
+    status: 'error',
+    message: 'Internal server error',
+  });
 
-  return response.json(err);
+  // return response.json(err);
 });
 
 app.listen(3333, () => {
