@@ -36,6 +36,11 @@ export default class CreateSearchArea1589669629082
             isNullable: true,
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

@@ -45,6 +45,11 @@ export default class CreateLocking1589826592369 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

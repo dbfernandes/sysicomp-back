@@ -56,6 +56,11 @@ export default class CreateRoomReserve1588961381231
             type: 'varchar',
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

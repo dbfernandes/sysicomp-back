@@ -176,6 +176,11 @@ export default class CreatePostStudent1589670390279
             type: 'date',
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

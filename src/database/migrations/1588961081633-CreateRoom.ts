@@ -26,6 +26,11 @@ export default class CreateRoom1588961081633 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

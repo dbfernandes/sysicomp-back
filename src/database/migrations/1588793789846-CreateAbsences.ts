@@ -47,6 +47,11 @@ export default class CreateAbsences1588793789846 implements MigrationInterface {
             type: 'longtext',
           },
           {
+            name: 'status',
+            type: 'int',
+            default: 10,
+          },
+          {
             name: 'createdAt',
             type: 'timestamp',
             default: 'now()',

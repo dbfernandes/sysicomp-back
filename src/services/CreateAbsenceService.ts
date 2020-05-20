@@ -23,19 +23,25 @@ const transporter = nodemailer.createTransport(sendEmailConfig);
 class CreateAbsenceService {
   public async execute(
     bodyContent: Request,
-    usuarioId: string,
+    usuarioId: number,
   ): Promise<Absence> {
     const absencesRepository = getRepository(Absence);
     const usersRepository = getCustomRepository(UsersRepository);
 
     const absenceContent = Object.assign(bodyContent, {
-      usuarioId: parseInt(usuarioId, 10),
+      usuarioId,
     });
 
     const User = await usersRepository.findOne(absenceContent.usuarioId);
 
     const diretores = await usersRepository.findUsersByType(2);
     const coordenadores = await usersRepository.findUsersByType(3);
+
+    if (!diretores.length && !coordenadores.length) {
+      throw new AppError(
+        'Impossível solicitar afastamento.\nMotivo: Não há usuários com autoriazação para validar sua solicitação, peça para seus supervisores realizarem cadastro no sistema',
+      );
+    }
 
     const usersToSendEmail = [...diretores, ...coordenadores];
 

@@ -1,11 +1,11 @@
-import { getRepository, DeleteResult } from 'typeorm';
+import { getRepository, UpdateResult } from 'typeorm';
 
 import AppError from '../errors/AppError';
 
 import Locking from '../models/Locking';
 
 class UpdateLockingService {
-  public async execute(id: number): Promise<DeleteResult> {
+  public async execute(id: number): Promise<UpdateResult> {
     const LockingsRepository = getRepository(Locking);
 
     const currentLocking = await LockingsRepository.findOne(id);
@@ -16,7 +16,7 @@ class UpdateLockingService {
       );
     }
 
-    const deletedLocking = await LockingsRepository.delete(id);
+    const deletedLocking = await LockingsRepository.update(id, { status: 0 });
     return deletedLocking;
   }
 }

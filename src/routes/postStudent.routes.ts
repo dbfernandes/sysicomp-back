@@ -95,6 +95,12 @@ postStudentRouter.put('/:id', async (request, response) => {
     bodyContent,
   );
 
+  request.log.info(
+    `Id de usuário:${id}\nDados Anteriores:${JSON.stringify(
+      bodyContent,
+    )}\nDados Atualizados:${JSON.stringify(updatedPostStudent)}`,
+  );
+
   return response.json(updatedPostStudent);
 });
 

@@ -24,6 +24,9 @@ class Room {
   numero: number;
 
   @Column()
+  status: number;
+
+  @Column()
   localizacao: string;
 
   @CreateDateColumn()

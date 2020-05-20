@@ -9,14 +9,12 @@ absenceRouter.use(ensureAuthenticated);
 
 absenceRouter.post('/', async (request, reponse) => {
   const bodyContent = request.body;
-  const { usuarioid } = request.headers;
 
   const createAbsence = new CreateAbsenceService();
 
-  const absence = await createAbsence.execute(
-    bodyContent,
-    typeof usuarioid === 'string' ? usuarioid : 'Erro',
-  );
+  const usuarioId = request.user.id;
+
+  const absence = await createAbsence.execute(bodyContent, usuarioId);
 
   return reponse.json(absence);
 });

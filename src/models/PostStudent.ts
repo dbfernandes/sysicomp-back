@@ -49,6 +49,9 @@ class PostStudent {
     | 'Trancado';
 
   @Column()
+  status: number;
+
+  @Column()
   curso: 'Mestrado' | 'Doutorado';
 
   @Column()

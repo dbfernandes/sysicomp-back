@@ -43,6 +43,9 @@ class Locking {
   @Column()
   observacao: string;
 
+  @Column()
+  status: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

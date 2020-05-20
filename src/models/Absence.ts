@@ -40,6 +40,9 @@ class Abscence {
   @Column()
   planoReposicao: string;
 
+  @Column()
+  status: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

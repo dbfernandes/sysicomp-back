@@ -1,11 +1,11 @@
-import { getRepository, DeleteResult } from 'typeorm';
+import { getRepository, UpdateResult } from 'typeorm';
 
 import AppError from '../errors/AppError';
 
 import PostStudent from '../models/PostStudent';
 
 class DeletePostStudentService {
-  public async execute(id: number): Promise<DeleteResult> {
+  public async execute(id: number): Promise<UpdateResult> {
     const postStudentsRepository = getRepository(PostStudent);
 
     const currentPostStudent = await postStudentsRepository.findOne(id, {
@@ -18,7 +18,9 @@ class DeletePostStudentService {
       );
     }
 
-    const deletedPostUser = await postStudentsRepository.delete(id);
+    const deletedPostUser = await postStudentsRepository.update(id, {
+      status: 0,
+    });
 
     return deletedPostUser;
   }

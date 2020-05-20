@@ -46,6 +46,9 @@ class RoomReserve {
   @Column()
   diasSemana: string;
 
+  @Column()
+  status: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

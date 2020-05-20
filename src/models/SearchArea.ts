@@ -32,6 +32,9 @@ class SearchArea {
   @OneToMany(() => PostStudent, postStudent => postStudent.area)
   alunoPos: PostStudent;
 
+  @Column()
+  status: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

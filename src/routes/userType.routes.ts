@@ -12,6 +12,8 @@ userTypeRouter.get('/:id', async (request, response) => {
 
   const users = await userRepository.findUsersByType(parseInt(id, 10));
 
+  request.log.info(`Usuário Tipo buscado, id:${id}`);
+
   return response.json(users);
 });
 
