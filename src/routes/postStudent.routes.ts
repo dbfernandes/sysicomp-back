@@ -88,6 +88,10 @@ postStudentRouter.put('/:id', async (request, response) => {
   const { id } = request.params;
   const bodyContent = request.body;
 
+  const postStudentsRepository = getCustomRepository(PostStudentsRepository);
+
+  const originalData = await postStudentsRepository.findOne(parseInt(id, 10));
+
   const updatePostStudentService = new UpdatePostStudentService();
 
   const updatedPostStudent = await updatePostStudentService.execute(
@@ -96,9 +100,11 @@ postStudentRouter.put('/:id', async (request, response) => {
   );
 
   request.log.info(
-    `Id de usuário:${id}\nDados Anteriores:${JSON.stringify(
-      bodyContent,
-    )}\nDados Atualizados:${JSON.stringify(updatedPostStudent)}`,
+    `\n->Id de usuário:${id}\n->Dados Anteriores:${JSON.stringify(
+      originalData,
+    )}\n->Dados Atualizados:${JSON.stringify(
+      updatedPostStudent,
+    )}\n->Authorization:${request.headers.authorization}`,
   );
 
   return response.json(updatedPostStudent);

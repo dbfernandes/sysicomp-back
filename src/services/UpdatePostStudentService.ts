@@ -1,4 +1,4 @@
-import { getRepository, UpdateResult } from 'typeorm';
+import { getRepository } from 'typeorm';
 
 import AppError from '../errors/AppError';
 
@@ -8,7 +8,7 @@ class UpdatePostStudentService {
   public async execute(
     id: number,
     bodyContent: Omit<PostStudent, 'id' | 'createdAt' | 'updatedAt'>,
-  ): Promise<UpdateResult> {
+  ): Promise<PostStudent | undefined> {
     const postStudentsRepository = getRepository(PostStudent);
 
     const currentPostStudent = await postStudentsRepository.findOne(id, {
@@ -69,12 +69,21 @@ class UpdatePostStudentService {
       }
     }
 
-    const updatedPostUser = await postStudentsRepository.update(
+    await postStudentsRepository.update(
       {
         id,
       },
       bodyContent,
     );
+
+    const updatedPostUser = await postStudentsRepository.findOne(id, {
+      loadEagerRelations: false,
+    });
+
+    delete updatedPostUser?.createdAt;
+    delete updatedPostUser?.updatedAt;
+    delete updatedPostUser?.id;
+    delete updatedPostUser?.status;
 
     return updatedPostUser;
   }
