@@ -13,6 +13,8 @@ import SearchArea from './SearchArea';
 
 @Entity('AlunoPos')
 class PostStudent {
+  [key: string]: any;
+
   @PrimaryGeneratedColumn()
   id: number;
 

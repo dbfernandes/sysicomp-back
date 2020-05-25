@@ -7,11 +7,17 @@ import CreatePostStudentService from '../services/CreatePostStudentService';
 import UpdatePostStudentService from '../services/UpdatePostStudentService';
 import DeletePostStudentService from '../services/DeletePostStudentService';
 
+import CreateLogService from '../services/CreateLogService';
+
 import PostStudentsRepository from '../repositories/postStudentsRepository';
 
 import GenerateExcelFile from '../utils/generateExcelFile';
 
 const postStudentRouter = Router();
+
+interface FilteredObj {
+  [key: string]: any;
+}
 
 postStudentRouter.use(ensureAuthenticated);
 
@@ -94,18 +100,50 @@ postStudentRouter.put('/:id', async (request, response) => {
 
   const updatePostStudentService = new UpdatePostStudentService();
 
+  const createLog = new CreateLogService();
+
   const updatedPostStudent = await updatePostStudentService.execute(
     typeof id === 'string' ? parseInt(id, 10) : 0,
     bodyContent,
   );
 
-  request.log.info(
-    `\n->Id de usuário:${id}\n->Dados Anteriores:${JSON.stringify(
-      originalData,
-    )}\n->Dados Atualizados:${JSON.stringify(
-      updatedPostStudent,
-    )}\n->Authorization:${request.headers.authorization}`,
-  );
+  const properties = Object.getOwnPropertyNames(updatedPostStudent);
+
+  const updatedData: string[] = [];
+  const updatedDataFormatted = '';
+
+  if (updatedPostStudent && originalData) {
+    properties.forEach(prop => {
+      if (prop.indexOf('data') >= 0) {
+        if (
+          originalData[prop].toString() !== updatedPostStudent[prop].toString()
+        ) {
+          updatedData.push(prop);
+        }
+      } else if (originalData[prop] !== updatedPostStudent[prop]) {
+        updatedData.push(prop);
+      }
+    });
+
+    const originalFilteredData: FilteredObj = {};
+    const updatedFilteredData: FilteredObj = {};
+
+    updatedData.forEach(updated => {
+      originalFilteredData[updated] = originalData[updated];
+      updatedFilteredData[updated] = updatedPostStudent[updated];
+    });
+
+    console.log(originalFilteredData);
+    console.log(updatedFilteredData);
+  }
+
+  await createLog.execute({
+    usuarioId: request.user.id,
+    alunoPosId: parseInt(id, 10),
+    controller: 'postStudent',
+    action: 'update',
+    ocorrencia: updatedDataFormatted,
+  });
 
   return response.json(updatedPostStudent);
 });
