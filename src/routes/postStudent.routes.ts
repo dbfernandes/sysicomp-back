@@ -96,7 +96,11 @@ postStudentRouter.put('/:id', async (request, response) => {
 
   const postStudentsRepository = getCustomRepository(PostStudentsRepository);
 
-  const originalData = await postStudentsRepository.findOne(parseInt(id, 10));
+  const originalData = await postStudentsRepository.findOne(parseInt(id, 10), {
+    loadEagerRelations: false,
+  });
+  delete originalData?.createdAt;
+  delete originalData?.id;
 
   const updatePostStudentService = new UpdatePostStudentService();
 
@@ -107,42 +111,16 @@ postStudentRouter.put('/:id', async (request, response) => {
     bodyContent,
   );
 
-  const properties = Object.getOwnPropertyNames(updatedPostStudent);
-
-  const updatedData: string[] = [];
-  const updatedDataFormatted = '';
-
-  if (updatedPostStudent && originalData) {
-    properties.forEach(prop => {
-      if (prop.indexOf('data') >= 0) {
-        if (
-          originalData[prop].toString() !== updatedPostStudent[prop].toString()
-        ) {
-          updatedData.push(prop);
-        }
-      } else if (originalData[prop] !== updatedPostStudent[prop]) {
-        updatedData.push(prop);
-      }
-    });
-
-    const originalFilteredData: FilteredObj = {};
-    const updatedFilteredData: FilteredObj = {};
-
-    updatedData.forEach(updated => {
-      originalFilteredData[updated] = originalData[updated];
-      updatedFilteredData[updated] = updatedPostStudent[updated];
-    });
-
-    console.log(originalFilteredData);
-    console.log(updatedFilteredData);
-  }
+  const updatedFormattedData = `original:${JSON.stringify(
+    originalData,
+  )},new:${JSON.stringify(updatedPostStudent)}`;
 
   await createLog.execute({
     usuarioId: request.user.id,
     alunoPosId: parseInt(id, 10),
     controller: 'postStudent',
     action: 'update',
-    ocorrencia: updatedDataFormatted,
+    ocorrencia: updatedFormattedData,
   });
 
   return response.json(updatedPostStudent);
